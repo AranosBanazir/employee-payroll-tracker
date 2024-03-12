@@ -8,10 +8,10 @@ const collectEmployees = function() {
   let firstName = prompt("Employees First Name:")
   let lastName = prompt("Employees Last Name:")
   //made this parseInt to convert it to an integer
-  let salary = parseInt(prompt("Employees Annual Salary:"))
+  let salary = parseInt(prompt(`${firstName} ${lastName}'s Annual Salary:`))
   
    
-    if (isNaN(salary)|| salary===undefined){
+    if (isNaN(salary)|| salary===undefined || salary === null){
       salary = 0
     }
  
@@ -76,7 +76,8 @@ const displayAverageSalary = function(employeesArray) {
   console.log(employeesArray)
 
   if (employeesArray.length === 1) {
-    return employeesArray[0].salary
+    average = employeesArray[0].salary
+    return console.log(`The average salary between our ${employeesArray.length} employee is: $${average.toLocaleString()}`)
 
   }else{
     for (let i=0;i<employeesArray.length;i++){
@@ -84,7 +85,7 @@ const displayAverageSalary = function(employeesArray) {
     }
     
     average = Math.round(total / employeesArray.length)
-  return `The average salary between our ${employeesArray.length} employee(s) is: $${average.toLocaleString()}`
+  return console.log(`The average salary between our ${employeesArray.length} employees is: $${average.toLocaleString()}`)
   }
 }
 
@@ -92,7 +93,7 @@ const displayAverageSalary = function(employeesArray) {
 const getRandomEmployee = function(employeesArray) {
   // TODO: Select and display a random employee
   let rnd = Math.floor(Math.random() * employeesArray.length)
-  return `Congratulations to ${employeesArray[rnd].firstName} ${employeesArray[rnd].lastName} who is our lucky drawing winner!`
+  return console.log(`Congratulations to ${employeesArray[rnd].firstName} ${employeesArray[rnd].lastName} who is our lucky drawing winner!`)
 }
 
  
@@ -140,6 +141,7 @@ const displayEmployees = function(employeesArray) {
 }
 
 const trackEmployeeData = function() {
+  console.clear() 
   const employees = collectEmployees();
 
   console.table(employees);
