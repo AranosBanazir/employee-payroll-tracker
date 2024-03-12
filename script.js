@@ -2,6 +2,13 @@
 const addEmployeesBtn = document.querySelector('#add-employees-btn');
 let employeesArray = []
 // Collect employee data
+function numberWithCommas(x) {
+  x = x.toString();
+  var pattern = /(-?\d+)(\d{3})/;
+  while (pattern.test(x))
+      x = x.replace(pattern, "$1,$2");
+  return x;
+}
 const collectEmployees = function() {
   // TODO: Get user input to create and return an array of employee objects
   let firstName = prompt("What is your first name?")
@@ -122,7 +129,7 @@ const trackEmployeeData = function() {
   console.table(employees);
 
  
-  console.log(`The average salary between our ${employeesArray.length} employees is: ${displayAverageSalary(employees)}`)
+  console.log(`The average salary between our ${employeesArray.length} employees is: $${displayAverageSalary(employees).toLocaleString()}`)
   console.log('==============================');
   console.log(`Congratulations to ${getRandomEmployee(employees)} who is our lucky drawing winner!`)
 
