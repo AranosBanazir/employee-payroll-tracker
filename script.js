@@ -16,14 +16,14 @@ const collectEmployees = function() {
   let NameCheck = function(name){
 
     if (name === "first"){
-      if (firstName === "" || firstName === undefined || firstName === null){
-        firstName = prompt("First name may not be empty! Try again!")
+      if (firstName === "" || firstName === undefined || firstName === null || firstName.match(/\d+/g)){
+        firstName = prompt("First name must not contain numbers or be empty! Try again!")
         NameCheck("first")
       }
 
     }else if (name === "last"){
-      if (lastName === "" || lastName === undefined || lastName === null){
-        lastName = prompt("Last name may not be empty! Try again!")
+      if (lastName === "" || lastName === undefined || lastName === null || lastName.match(/\d+/g)){
+        lastName = prompt("Last name must not contain numbers or be empty! Try again!")
         NameCheck("last")
 
       }
@@ -46,32 +46,32 @@ const collectEmployees = function() {
   employeeObj.salary = salary
 
   employeesArray.push(employeeObj)
-
+  
   // employeesArray.push(firstName, lastName, salary)
 
-  employeesArray.forEach(element => {
-    console.log(employeesArray[0])
-    
-  });
-
-
-  if (confirm("Do you wish to continue?")){
+  while (confirm("Do you wish to continue?")) {
     collectEmployees()
-  }else{
-    alert("Done adding employees!")
+    return employeesArray
   }
-  
+
 }
 
 // Display the average salary
 const displayAverageSalary = function(employeesArray) {
   // TODO: Calculate and display the average salary
 
+  let total = 0
+  for (let i=0;i<employeesArray.length;i++){
+    total = Math.floor(total + parseInt(employeesArray[i].salary))
+  }
+  
+  return Math.round(total / employeesArray.length)
 }
-
 // Select a random employee
 const getRandomEmployee = function(employeesArray) {
   // TODO: Select and display a random employee
+  let rnd = Math.floor(Math.random() * employeesArray.length)
+  return employeesArray[rnd].firstName + " " + employeesArray[rnd].lastName
 }
 
 /*
@@ -116,15 +116,17 @@ const displayEmployees = function(employeesArray) {
 }
 
 const trackEmployeeData = function() {
+
   const employees = collectEmployees();
 
   console.table(employees);
 
-  displayAverageSalary(employees);
-
+ 
+  console.log(`The average salary between our ${employeesArray.length} employees is: ${displayAverageSalary(employees)}`)
   console.log('==============================');
+  console.log(`Congratulations to ${getRandomEmployee(employees)} who is our lucky drawing winner!`)
 
-  getRandomEmployee(employees);
+  
 
   employees.sort(function(a,b) {
     if (a.lastName < b.lastName) {
@@ -136,6 +138,7 @@ const trackEmployeeData = function() {
 
   displayEmployees(employees);
 }
+
 
 // Add event listener to 'Add Employees' button
 addEmployeesBtn.addEventListener('click', trackEmployeeData);
