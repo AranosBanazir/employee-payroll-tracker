@@ -35,8 +35,6 @@ const collectEmployees = function() {
   NameCheck("first")
   NameCheck("last")
   
-<<<<<<< HEAD
-=======
   let employeeObj = {
     firstName,
     lastName,
@@ -56,16 +54,11 @@ const collectEmployees = function() {
     
   });
 
->>>>>>> 7897d5af1c7f11a8dae2627839c44692e35ef79a
 
   if (confirm("Do you wish to continue?")){
     collectEmployees()
-    
   }else{
     alert("Done adding employees!")
-    for (let i = 0;i<employeesArray.length; i++){
-      console.log(employeesArray[i])
-    }
   }
   
 }
