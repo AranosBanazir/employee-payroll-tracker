@@ -2,25 +2,20 @@
 const addEmployeesBtn = document.querySelector('#add-employees-btn');
 let employeesArray = []
 // Collect employee data
-function numberWithCommas(x) {
-  x = x.toString();
-  var pattern = /(-?\d+)(\d{3})/;
-  while (pattern.test(x))
-      x = x.replace(pattern, "$1,$2");
-  return x;
-}
+
 const collectEmployees = function() {
   // TODO: Get user input to create and return an array of employee objects
   let firstName = prompt("What is your first name?")
   let lastName = prompt("What is your last name?")
   let salary = prompt("How much do you make a year?")
-  let salaryCheck = function(){
+  
+  const salaryCheck = function(){
     if (isNaN(salary) || salary === "" || salary === undefined) {
       salary = prompt("Salary must be a number, please enter correct salary amount or 0.")
       salaryCheck()
     }
   }
-  let NameCheck = function(name){
+  const NameCheck = function(name){
 
     if (name === "first"){
       if (firstName === "" || firstName === undefined || firstName === null || firstName.match(/\d+/g)){
@@ -42,6 +37,7 @@ const collectEmployees = function() {
   NameCheck("first")
   NameCheck("last")
   
+  //Declaring object format
   let employeeObj = {
     firstName,
     lastName,
@@ -52,14 +48,17 @@ const collectEmployees = function() {
   employeeObj.lastName = lastName
   employeeObj.salary = salary
 
+  //pushing the object into the array
   employeesArray.push(employeeObj)
   
-  // employeesArray.push(firstName, lastName, salary)
+  
 
+  //checking to confirm they want to continue and returning the array
   while (confirm("Do you wish to continue?")) {
     collectEmployees()
     return employeesArray
   }
+  return employeesArray
 
 }
 
@@ -68,11 +67,17 @@ const displayAverageSalary = function(employeesArray) {
   // TODO: Calculate and display the average salary
 
   let total = 0
-  for (let i=0;i<employeesArray.length;i++){
-    total = Math.floor(total + parseInt(employeesArray[i].salary))
-  }
-  
+  console.log(employeesArray)
+
+  if (employeesArray.length === 1) {
+    return employeesArray[0].salary
+
+  }else{
+    for (let i=0;i<employeesArray.length;i++){
+      total = Math.floor(total + parseInt(employeesArray[i].salary))
+    }
   return Math.round(total / employeesArray.length)
+  }
 }
 // Select a random employee
 const getRandomEmployee = function(employeesArray) {
@@ -91,7 +96,6 @@ const getRandomEmployee = function(employeesArray) {
 const displayEmployees = function(employeesArray) {
   // Get the employee table
   const employeeTable = document.querySelector('#employee-table');
-
   // Clear the employee table
   employeeTable.innerHTML = '';
 
@@ -111,7 +115,9 @@ const displayEmployees = function(employeesArray) {
 
     const salaryCell = document.createElement("td");
     // Format the salary as currency
-    salaryCell.textContent = currentEmployee.salary.toLocaleString("en-US",{
+    // This doesn't seem to be working
+    //TODO Ask about fixing this
+    salaryCell.textContent = currentEmployee.salary.toLocaleString("en-EN",{
       style:"currency",
       currency:"USD"
     });
@@ -123,7 +129,7 @@ const displayEmployees = function(employeesArray) {
 }
 
 const trackEmployeeData = function() {
-
+  console.clear()
   const employees = collectEmployees();
 
   console.table(employees);
