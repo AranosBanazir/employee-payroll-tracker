@@ -7,26 +7,53 @@ const collectEmployees = function() {
   let firstName = prompt("What is your first name?")
   let lastName = prompt("What is your last name?")
   let salary = prompt("How much do you make a year?")
-  let firstNameCheck = firstName.match(/\d+/g)
-  let lastNameCheck = firstname.match(/\d+/g)
+  let salaryCheck = function(){
+    if (isNaN(salary) || salary === "" || salary === undefined) {
+      salary = prompt("Salary must be a number, please enter correct salary amount or 0.")
+      salaryCheck()
+    }
+  }
+  let NameCheck = function(name){
 
-  // Making sure Salary is a number
-  if (isNaN(salary)) {
-    salary = 0
+    if (name === "first"){
+      if (firstName === "" || firstName === undefined || firstName === null){
+        firstName = prompt("First name may not be empty! Try again!")
+        NameCheck("first")
+      }
+
+    }else if (name === "last"){
+      if (lastName === "" || lastName === undefined || lastName === null){
+        lastName = prompt("Last name may not be empty! Try again!")
+        NameCheck("last")
+
+      }
+    }
   }
 
- if (firstNameCheck != null || firstNameCheck != object){
-    firstName = prompt("Only use letters! What is the employees name?")
- }
-
- if (lastNameCheck != null || lastNameCheck != object){
-  firstName = prompt("Only use letters! What is the employees name?")
-}
-
-
-  employeesArray.push(firstName, lastName, salary)
+  // Making sure all selections are validated properly
+  salaryCheck()
+  NameCheck("first")
+  NameCheck("last")
   
-  console.log("hello " + employeesArray)
+  let employeeObj = {
+    firstName,
+    lastName,
+    salary,
+  }
+
+  employeeObj.firstName = firstName
+  employeeObj.lastName = lastName
+  employeeObj.salary = salary
+
+  employeesArray.push(employeeObj)
+
+  // employeesArray.push(firstName, lastName, salary)
+
+  employeesArray.forEach(element => {
+    console.log(employeesArray[0])
+    
+  });
+
 
   if (confirm("Do you wish to continue?")){
     collectEmployees()
