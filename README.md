@@ -1,2 +1,1 @@
-# employee-payroll-tracker
-A simple JavaScript payroll tracker
+# Employee Payroll Tracker Starter Code
