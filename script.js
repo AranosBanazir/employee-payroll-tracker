@@ -26,12 +26,15 @@ const collectEmployees = function() {
 
   employeesArray.push(firstName, lastName, salary)
   
-  console.log("hello " + employeesArray)
 
   if (confirm("Do you wish to continue?")){
     collectEmployees()
+    
   }else{
     alert("Done adding employees!")
+    for (let i = 0;i<employeesArray.length; i++){
+      console.log(employeesArray[i])
+    }
   }
   
 }
