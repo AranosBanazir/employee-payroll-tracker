@@ -5,37 +5,42 @@ let employeesArray = []
 
 const collectEmployees = function() {
   // TODO: Get user input to create and return an array of employee objects
-  let firstName = prompt("What is your first name?")
-  let lastName = prompt("What is your last name?")
-  let salary = prompt("How much do you make a year?")
+  let firstName = prompt("Employees First Name:")
+  let lastName = prompt("Employees Last Name:")
+  //made this parseInt to convert it to an integer
+  let salary = parseInt(prompt("Employees Annual Salary:"))
   
-  const salaryCheck = function(){
-    if (isNaN(salary) || salary === "" || salary === undefined) {
-      salary = prompt("Salary must be a number, please enter correct salary amount or 0.")
-      salaryCheck()
+   
+    if (isNaN(salary)|| salary===undefined){
+      salary = 0
     }
-  }
+ 
   const NameCheck = function(name){
 
     if (name === "first"){
-      if (firstName === "" || firstName === undefined || firstName === null || firstName.match(/\d+/g)){
-        firstName = prompt("First name must not contain numbers or be empty! Try again!")
+      if (firstName === "" || firstName === undefined || firstName === null ){
+        firstName = prompt("First name cannot be empty! Try again!")
+        NameCheck("first")
+      }else if (firstName.match(/\d+/g)){
+        firstName = prompt("First name cannot contain numbers! Try again!")
         NameCheck("first")
       }
 
     }else if (name === "last"){
-      if (lastName === "" || lastName === undefined || lastName === null || lastName.match(/\d+/g)){
-        lastName = prompt("Last name must not contain numbers or be empty! Try again!")
+      if (lastName === "" || lastName === undefined || lastName === null){
+        lastName = prompt("Last name cannot be empty! Try again!")
         NameCheck("last")
-
+      }else if (lastName.match(/\d+/g)){
+        lastName = prompt("Last name cannot contain numbers! Try again!")
+        NameCheck("last")
+      }
       }
     }
-  }
+  
 
   // Making sure all selections are validated properly
-  salaryCheck()
-  NameCheck("first")
-  NameCheck("last")
+  NameCheck("first") //Makes sure the first name option is not empty, and does not contain inappropriate characters
+  NameCheck("last") //Makes sure the last name option is not empty, and does not contain inappropriate characters
   
   //Declaring object format
   let employeeObj = {
@@ -67,6 +72,7 @@ const displayAverageSalary = function(employeesArray) {
   // TODO: Calculate and display the average salary
 
   let total = 0
+  let average;
   console.log(employeesArray)
 
   if (employeesArray.length === 1) {
@@ -76,16 +82,21 @@ const displayAverageSalary = function(employeesArray) {
     for (let i=0;i<employeesArray.length;i++){
       total = Math.floor(total + parseInt(employeesArray[i].salary))
     }
-  return Math.round(total / employeesArray.length)
+    
+    average = Math.round(total / employeesArray.length)
+  return `The average salary between our ${employeesArray.length} employee(s) is: $${average.toLocaleString()}`
   }
 }
+
 // Select a random employee
 const getRandomEmployee = function(employeesArray) {
   // TODO: Select and display a random employee
   let rnd = Math.floor(Math.random() * employeesArray.length)
-  return employeesArray[rnd].firstName + " " + employeesArray[rnd].lastName
+  return `Congratulations to ${employeesArray[rnd].firstName} ${employeesArray[rnd].lastName} who is our lucky drawing winner!`
 }
 
+ 
+// console.log(`The average salary between our ${employeesArray.length} employee(s) is: $${displayAverageSalary(employees).toLocaleString()}`)
 /*
   ====================
   STARTER CODE
@@ -129,17 +140,15 @@ const displayEmployees = function(employeesArray) {
 }
 
 const trackEmployeeData = function() {
-  console.clear()
   const employees = collectEmployees();
 
   console.table(employees);
 
- 
-  console.log(`The average salary between our ${employeesArray.length} employees is: $${displayAverageSalary(employees).toLocaleString()}`)
-  console.log('==============================');
-  console.log(`Congratulations to ${getRandomEmployee(employees)} who is our lucky drawing winner!`)
+  displayAverageSalary(employees);
 
-  
+  console.log('==============================');
+
+  getRandomEmployee(employees);
 
   employees.sort(function(a,b) {
     if (a.lastName < b.lastName) {
